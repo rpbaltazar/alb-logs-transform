@@ -1,10 +1,12 @@
+#!/usr/bin/env ruby
+
 # frozen_string_literal: true
 
 require 'csv'
 require 'byebug'
 require 'uri'
 
-filename = 'input.csv'
+filename = ARGV[0] || 'input.csv'
 
 @final_data = []
 
@@ -37,7 +39,8 @@ CSV.foreach(filename, headers: true) do |row|
   end
 end
 
-CSV.open("output.csv", "w") do |csv|
+output = "#{filename.split('.csv')[0]}_out.csv"
+CSV.open(output, "w") do |csv|
   csv << ["f0_", "request_path", "request_verb"]
   @final_data.each do |row|
     csv << [row[:count], row[:url], row[:verb]]
